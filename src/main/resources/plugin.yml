@@ -1,0 +1,4 @@
+main: gg.kvdlxne.ts.BukkitPluginMain
+version: ${project.version}
+name: ${project.name}
+description: ${project.description}
