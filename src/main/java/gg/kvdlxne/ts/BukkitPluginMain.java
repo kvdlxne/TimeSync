@@ -1,44 +1,22 @@
 package gg.kvdlxne.ts;
 
 import org.bukkit.Bukkit;
-import org.bukkit.World;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.time.LocalTime;
-import java.util.HashSet;
-import java.util.Set;
+import java.time.LocalDateTime;
 
-@SuppressWarnings("unused")
-public final class BukkitPluginMain extends JavaPlugin implements Runnable {
-
-  private static final String DO_DAYLIGHT_CYCLE = "doDaylightCycle";
-  private final Set<World> worlds = new HashSet<>(6);
+public final class BukkitPluginMain extends JavaPlugin {
 
   @Override
   public void onEnable() {
-    for (final World world : Bukkit.getWorlds()) {
-      if ("false".equals(world.getGameRuleValue(DO_DAYLIGHT_CYCLE))) {
-        world.setGameRuleValue(DO_DAYLIGHT_CYCLE, "true");
-      }
-      worlds.add(world);
-    }
-    Bukkit.getScheduler().runTaskTimerAsynchronously(this, this, 20L, 60 * 20L);
-  }
-
-  @Override
-  public void onDisable() {
-    for (final World world : worlds) {
-      world.setGameRuleValue(DO_DAYLIGHT_CYCLE, "false");
-    }
-  }
-
-  @Override
-  public void run() {
-    final LocalTime localTime = LocalTime.now();
-    for (final World world : worlds) {
-      final int minecraftMinutes = localTime.getMinute() * (1000 / 60);
-      final int hours = localTime.getHour();
-      world.setFullTime((hours * 1000 - (6 > hours ? 18000 : 6000)) + minecraftMinutes);
-    }
+    Bukkit.getScheduler().runTaskTimerAsynchronously(this, () -> {
+      final LocalDateTime time = LocalDateTime.now();
+      final int days = time.getDayOfYear() * 24000;
+      final int hours = time.getHour();
+      final int offset = 6 > hours ? 18000 : 6000;
+      final double minutes = time.getMinute() * (1000.0d / 60.0d);
+      final long fullTime = (long) Math.ceil(days + hours * 1000L - offset + minutes);
+      Bukkit.getWorlds().forEach(world -> world.setFullTime(fullTime));
+    }, 20L, 1200L);
   }
 }
