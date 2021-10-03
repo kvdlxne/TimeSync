@@ -7,7 +7,7 @@
   <version>1.0-SNAPSHOT</version>
   <packaging>jar</packaging>
 
-  <name>TimeSynchronization</name>
+  <name>TimeSync</name>
   <description>synchronization of the game time with real time</description>
 
   <properties>
@@ -18,7 +18,7 @@
 
   <build>
     <defaultGoal>clean install</defaultGoal>
-    <finalName>${project.artifactId}</finalName>
+    <finalName>${project.name}-${project.version}-bukkit</finalName>
 
     <plugins>
       <plugin>
@@ -28,6 +28,22 @@
         <configuration>
           <source>${java.version}</source>
           <target>${java.version}</target>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>3.2.0</version>
+        <configuration>
+          <archive>
+            <!-- Preferred archive with no maven description -->
+            <!-- this file (pom.xml) and pom.properties -->
+            <addMavenDescriptor>false</addMavenDescriptor>
+            <manifest>
+              <addDefaultEntries>false</addDefaultEntries>
+            </manifest>
+          </archive>
         </configuration>
       </plugin>
     </plugins>
