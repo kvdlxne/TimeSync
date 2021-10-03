@@ -1,4 +1,4 @@
-package gg.kvdlxne.ts;
+package gg.kvdlxne.ts.bukkit;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
