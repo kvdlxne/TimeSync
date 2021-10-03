@@ -1,4 +1,5 @@
 main: gg.kvdlxne.ts.bukkit.BukkitPluginMain
 version: ${project.version}
-name: ${project.name}
+name: TimeSync
 description: ${project.description}
+author: kvdlxne
