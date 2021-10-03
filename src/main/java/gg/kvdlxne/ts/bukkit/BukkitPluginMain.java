@@ -9,7 +9,8 @@ public final class BukkitPluginMain extends JavaPlugin {
 
   @Override
   public void onEnable() {
-    Bukkit.getScheduler().runTaskTimerAsynchronously(this, () -> {
+    // bukkit does not support asynchronous time shift
+    Bukkit.getScheduler().runTaskTimer(this, () -> {
       final LocalDateTime time = LocalDateTime.now();
       final int days = time.getDayOfYear() * 24000;
       final int hours = time.getHour();
