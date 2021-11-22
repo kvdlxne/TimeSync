@@ -1,6 +1,7 @@
 package gg.kvdlxne.ts.bukkit;
 
 import org.bukkit.Bukkit;
+import org.bukkit.World;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -37,7 +38,6 @@ public final class BukkitPluginMain extends JavaPlugin {
       hoursOffset = 0;
     }
     final ZoneId zoneId = ZoneOffset.ofHours(hoursOffset);
-    // bukkit does not support asynchronous time shift
     Bukkit.getScheduler().runTaskTimer(this, () -> {
       final LocalDateTime time = LocalDateTime.now(zoneId);
       final int days = time.getDayOfYear() * 24000;
@@ -45,7 +45,11 @@ public final class BukkitPluginMain extends JavaPlugin {
       final int offset = 6 > hours ? 18000 : 6000;
       final double minutes = time.getMinute() * (1000.0d / 60.0d);
       final long fullTime = (long) Math.ceil(days + hours * 1000L - offset + minutes);
-      Bukkit.getWorlds().forEach(world -> world.setFullTime(fullTime));
+      Bukkit.getWorlds().forEach(world -> {
+        if (World.Environment.NORMAL == world.getEnvironment()) {
+          world.setFullTime(fullTime);
+        }
+      });
     }, 20L, 1200L);
   }
 }

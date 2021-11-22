@@ -1,5 +1,7 @@
 # TimeSync
-A simple plugin that synchronizes the real time with the time in the game.
+A simple plugin that synchronizes the real time with the game time on **normal** worlds
+because the effect of changing the world time like **nether** or **the end** is
+imperceptible.
 
 ## Blinking sun / moon
 **Explanation**:
@@ -10,4 +12,5 @@ time slower than the server.
 **Solution**:
 The solution is very simple, set the ``doDaylightCycle`` rule on your world to ``false``.
 <br>
-If you don't know how to do this, copy this command: ``/gamerule doDaylightCycle false``
+If you don't know how to do this, copy this command: ``/gamerule doDaylightCycle false`` and
+paste this in a world where you want to stop the server from shifting times.
